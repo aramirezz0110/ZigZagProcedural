@@ -2536,6 +2536,10 @@ PrefabInstance:
       propertyPath: rayOrigin
       value: 
       objectReference: {fileID: 4277873449056141993}
+    - target: {fileID: 4232077660594742385, guid: bb35964e72d92464ca219b0adcff381e, type: 3}
+      propertyPath: crystalParticle
+      value: 
+      objectReference: {fileID: 3079961744604344345, guid: 06b104c2db96dfe4db4a9fdfdf94e88d, type: 3}
     - target: {fileID: 4273395507244175712, guid: bb35964e72d92464ca219b0adcff381e, type: 3}
       propertyPath: m_RootOrder
       value: 3

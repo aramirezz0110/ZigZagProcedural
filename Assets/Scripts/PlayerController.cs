@@ -4,6 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Transform rayOrigin;
+    [SerializeField] private GameObject crystalParticle;
+
+
     private bool isWalkinkLeft = true;
     private float speedMultiplier = 2f;
 
@@ -11,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Animator myAnimator;
     private GameManager gameManagerInstance;
     private RaycastHit hitContact;
-    [SerializeField] private Transform rayOrigin;
+    
 
     private void Awake()
     {
@@ -84,7 +88,10 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.tag == GameTags.Crystal)
         {
-            gameManagerInstance.IncreaseScore();
+            gameManagerInstance.IncreaseScore();            
+
+            GameObject tempInstance = Instantiate(crystalParticle, rayOrigin.position, Quaternion.identity);
+            Destroy(tempInstance, 2f);
             Destroy(other.gameObject);
         }
     }
