@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody myRigidbody;
     private Animator myAnimator;
+    private GameManager gameManagerInstance;
     private RaycastHit hitContact;
     [SerializeField] private Transform rayOrigin;
 
@@ -16,10 +17,11 @@ public class PlayerController : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody>();
         myAnimator = GetComponent<Animator>();
+        
     }
     private void Start()
     {
-        
+        gameManagerInstance = GameManager.Instance;
     }
     private void Update()
     {
@@ -29,8 +31,12 @@ public class PlayerController : MonoBehaviour
         }
         if (!IsGrounded())
         {
-            myAnimator.SetTrigger(PlayerAnimParams.IsFalling);
-        }       
+            myAnimator.SetTrigger(PlayerAnimParams.Falling);
+            if (IsInDeadZone())
+            {
+                gameManagerInstance.FinishGame();
+            }
+        }         
     }
     private void FixedUpdate()
     {
@@ -38,10 +44,17 @@ public class PlayerController : MonoBehaviour
     }
     private void Movement()
     {
+        if (!gameManagerInstance.gameStarted)
+            return;
+
         myRigidbody.transform.position = transform.position + transform.forward * speedMultiplier * Time.deltaTime;
+        myAnimator.SetTrigger(PlayerAnimParams.Running);
     }
     private void ChangeDirection()
     {
+        if (!gameManagerInstance.gameStarted)
+            return;
+
         isWalkinkLeft = !isWalkinkLeft;
 
         if (isWalkinkLeft)
@@ -59,5 +72,20 @@ public class PlayerController : MonoBehaviour
             return true;
         else
             return false;
+    }
+    private bool IsInDeadZone()
+    {
+        if (transform.position.y < -2)
+            return true;
+        else
+            return false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == GameTags.Crystal)
+        {
+            gameManagerInstance.IncreaseScore();
+            Destroy(other.gameObject);
+        }
     }
 }
