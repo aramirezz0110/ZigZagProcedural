@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         gameStarted = true;
+        RouteManager.Instance.StartRouteConstruction();
     }
     public void FinishGame()
     {
