@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     }
     public void FinishGame()
     {
-        SceneSwitcher.Instance.LoadMainScene();
+        SceneSwitcher.Instance.LoadGameScene();
     }
     public void IncreaseScore()
     {

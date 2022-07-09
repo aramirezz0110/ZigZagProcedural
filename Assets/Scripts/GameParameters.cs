@@ -9,7 +9,8 @@ public static class PlayerAnimParams
 }
 public static class SceneNames 
 {
-    public static string MainScene = "MainScene";
+    public static string MainMenu = "MainMenu";
+    public static string GameScene = "GameScene";
 }
 public static class GameTags
 {

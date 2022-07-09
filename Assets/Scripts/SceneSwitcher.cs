@@ -9,8 +9,12 @@ public class SceneSwitcher : MonoBehaviour
     {
         Instance = this;
     }
-    public void LoadMainScene()
+    public void LoadGameScene()
     {
-        SceneManager.LoadScene(SceneNames.MainScene);
+        SceneManager.LoadScene(SceneNames.GameScene);
+    }
+    public void LoadMainMenuScene()
+    {
+        SceneManager.LoadScene(SceneNames.MainMenu);
     }
 }
