@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody myRigidbody;
-    private bool isWalkinkLeft=true;
+    private bool isWalkinkLeft = true;
     private float speedMultiplier = 2f;
+
+    private Rigidbody myRigidbody;
+    private Animator myAnimator;
+    private RaycastHit hitContact;
+    [SerializeField] private Transform rayOrigin;
+
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        myAnimator = GetComponent<Animator>();
     }
     private void Start()
     {
@@ -21,6 +27,10 @@ public class PlayerController : MonoBehaviour
         {
             ChangeDirection();
         }
+        if (!IsGrounded())
+        {
+            myAnimator.SetTrigger(PlayerAnimParams.IsFalling);
+        }       
     }
     private void FixedUpdate()
     {
@@ -42,5 +52,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, -45, 0);
         }
+    }
+    private bool IsGrounded()
+    {
+        if (Physics.Raycast(rayOrigin.position, -transform.up, out hitContact, Mathf.Infinity))
+            return true;
+        else
+            return false;
     }
 }
